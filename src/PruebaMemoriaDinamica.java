@@ -3,6 +3,32 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.ArrayList;
 
+
+interface Validacion{
+	Scanner input = new Scanner(System.in);
+	public static int validacionNatural() {
+		int ret = 0;
+		boolean err = false;
+		do {
+			try {
+				ret = input.nextInt();
+			} catch (java.util.InputMismatchException e) {
+				System.out.println("entrada no valida, intente de nuevo:");
+				input.nextLine();
+				err=true;
+			}
+			if (ret>0) {
+				err=false;
+			}else {
+				System.out.println("solo números naturales");
+				err=true;
+			}
+		}while(err);
+		return ret;
+	}
+}
+
+
 class Aspirante{
 	private int folio;
 	private String Nombre;
@@ -92,57 +118,57 @@ public class PruebaMemoriaDinamica {
 
 	public static void main(String[] args) {
 		
-		Scanner input = new Scanner(System.in);
-		
-		RegistroAspirantes ra = new RegistroAspirantes();
-		
-		String nombre;
-		String folio = null;
-		int opc=0;
-		int edad=0;
-
-		do {
-			System.out.println("1)Agregar aspirante \n"
-					+ "2)Eliminar aspitante \n"
-					+ "3)Mostrar aspirantes \n"
-					+ "4)Salir");
-			opc = input.nextInt();
-			switch (opc) {
-			case 1:
-				String redes[]=new String[3];
-				System.out.println("nombre: ");
-				nombre = input.nextLine();
-				System.out.println("edad: ");
-				edad = input.nextInt();
-				System.out.println("Facebook: ");
-				redes[0]=input.nextLine();
-				System.out.println("Twitter: ");
-				redes[1]=input.nextLine();
-				System.out.println("Instagram: ");
-				redes[2]=input.nextLine();
-				
-				if (ra.listaAspirantes.isEmpty()) {
-					ra.agregarAspirante(new Aspirante(1,nombre, (byte)edad, redes));
-				}else {
-					ra.agregarAspirante(new Aspirante(ra.getnFolio(), nombre, (byte)edad, redes));
-				}
-				break;
-			case 2:
-				ra.eliminarAspirante(folio);
-				break;
-			case 3:
-				ra.mostrarAspirantes();
-				break;
-			case 4:
-				break;
-			default:
-				System.out.println("opción no válida");
-				break;
-			}
+			Scanner input = new Scanner(System.in);
 			
-		}while (opc!=4);
-		
-		System.out.println("Tamaño del arraylist: " + ra.listaAspirantes.size());
+			RegistroAspirantes ra = new RegistroAspirantes();
+			
+			String nombre;
+			String folio = null;
+			int opc=0;
+			int edad=0;
+
+			do {
+				System.out.println("1)Agregar aspirante \n"
+						+ "2)Eliminar aspitante \n"
+						+ "3)Mostrar aspirantes \n"
+						+ "4)Salir");
+				opc = Validacion.validacionNatural();
+				switch (opc) {
+				case 1:
+					String redes[]=new String[3];
+					System.out.println("nombre: ");
+					nombre = input.nextLine();
+					System.out.println("edad: ");
+					edad = Validacion.validacionNatural();
+					System.out.println("Facebook: ");
+					redes[0]=input.nextLine();
+					System.out.println("Twitter: ");
+					redes[1]=input.nextLine();
+					System.out.println("Instagram: ");
+					redes[2]=input.nextLine();
+					
+					if (ra.listaAspirantes.isEmpty()) {
+						ra.agregarAspirante(new Aspirante(1,nombre, (byte)edad, redes));
+					}else {
+						ra.agregarAspirante(new Aspirante(ra.getnFolio(), nombre, (byte)edad, redes));
+					}
+					break;
+				case 2:
+					ra.eliminarAspirante(folio);
+					break;
+				case 3:
+					ra.mostrarAspirantes();
+					break;
+				case 4:
+					break;
+				default:
+					System.out.println("opción no válida");
+					break;
+				}
+				
+			}while (opc!=4);
+			
+			System.out.println("Tamaño del arraylist: " + ra.listaAspirantes.size());
 
 	}
 
