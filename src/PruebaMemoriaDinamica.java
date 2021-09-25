@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.ArrayList;
 
 class Aspirante{
@@ -91,6 +92,57 @@ public class PruebaMemoriaDinamica {
 
 	public static void main(String[] args) {
 		
+		Scanner input = new Scanner(System.in);
+		
+		RegistroAspirantes ra = new RegistroAspirantes();
+		
+		String nombre;
+		String folio = null;
+		int opc=0;
+		int edad=0;
+
+		do {
+			System.out.println("1)Agregar aspirante \n"
+					+ "2)Eliminar aspitante \n"
+					+ "3)Mostrar aspirantes \n"
+					+ "4)Salir");
+			opc = input.nextInt();
+			switch (opc) {
+			case 1:
+				String redes[]=new String[3];
+				System.out.println("nombre: ");
+				nombre = input.nextLine();
+				System.out.println("edad: ");
+				edad = input.nextInt();
+				System.out.println("Facebook: ");
+				redes[0]=input.nextLine();
+				System.out.println("Twitter: ");
+				redes[1]=input.nextLine();
+				System.out.println("Instagram: ");
+				redes[2]=input.nextLine();
+				
+				if (ra.listaAspirantes.isEmpty()) {
+					ra.agregarAspirante(new Aspirante(1,nombre, (byte)edad, redes));
+				}else {
+					ra.agregarAspirante(new Aspirante(ra.getnFolio(), nombre, (byte)edad, redes));
+				}
+				break;
+			case 2:
+				ra.eliminarAspirante(folio);
+				break;
+			case 3:
+				ra.mostrarAspirantes();
+				break;
+			case 4:
+				break;
+			default:
+				System.out.println("opción no válida");
+				break;
+			}
+			
+		}while (opc!=4);
+		
+		System.out.println("Tamaño del arraylist: " + ra.listaAspirantes.size());
 
 	}
 
